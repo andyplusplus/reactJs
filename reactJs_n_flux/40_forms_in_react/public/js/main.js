@@ -19104,54 +19104,155 @@ if (process.env.NODE_ENV !== 'production') {
 module.exports = warning;
 }).call(this,require('_process'))
 },{"./emptyFunction":139,"_process":1}],159:[function(require,module,exports){
+"use strict";
+
+var tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-?\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+// Thanks to:
+// http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+// http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
+// http://stackoverflow.com/questions/201323/what-is-the-best-regular-expression-for-validating-email-addresses/201378#201378
+function validate(email)
+{
+	if (!email)
+		return false;
+		
+	if(email.length>254)
+		return false;
+
+	var valid = tester.test(email);
+	if(!valid)
+		return false;
+
+	// Further checking of some things regex can't handle
+	var parts = email.split("@");
+	if(parts[0].length>64)
+		return false;
+
+	var domainParts = parts[1].split(".");
+	if(domainParts.some(function(part) { return part.length>63; }))
+		return false;
+
+	return true;
+}
+
+exports.validate = validate;
+
+},{}],160:[function(require,module,exports){
 var React = require('react');
-var ListItem = require('./ListItem.jsx');
+var validator = require('email-validator');
 
-var ingredients = [{ "id": 1, "text": "ham" }, { "id": 2, "text": "cheese" }, { "id": 3, "text": "potatoes" }];
+var EmailField = React.createClass({
+	displayName: 'EmailField',
 
-var List = React.createClass({
-    displayName: 'List',
-
-    render: function () {
-        var listItems = ingredients.map(function (item) {
-            return React.createElement(ListItem, { key: item.id, ingredient: item.text });
-        });
-
-        return React.createElement(
-            'ul',
-            null,
-            listItems
-        );
-    }
+	getInitialState: function () {
+		return {
+			valid: true, value: ""
+		};
+	},
+	clear: function () {
+		this.setState({ valid: true, value: "" });
+	},
+	onChange: function (e) {
+		var val = e.target.value;
+		if (!validator.validate(e.target.value)) {
+			this.setState({ valid: false, value: e.target.value });
+		} else {
+			this.setState({ valid: true, value: e.target.value });
+		}
+	},
+	render: function () {
+		var formClass = this.state.valid ? "form-group" : "form-group has-error";
+		return React.createElement(
+			'div',
+			{ className: formClass },
+			React.createElement('input', { className: 'form-control', onChange: this.onChange, placeHolde: 'Email', value: this.state.value })
+		);
+	}
 });
 
-module.exports = List;
+module.exports = EmailField;
 
-},{"./ListItem.jsx":160,"react":131}],160:[function(require,module,exports){
+},{"email-validator":159,"react":131}],161:[function(require,module,exports){
 var React = require('react');
-var ListItem = React.createClass({
-    displayName: 'ListItem',
+var EmailField = require('./EmailField.jsx');
+var NameField = require('./NameField.jsx');
 
-    render: function () {
-        return React.createElement(
-            'li',
-            null,
-            React.createElement(
-                'h4',
-                null,
-                this.props.ingredient
-            )
-        );
-    }
+var LeadCapture = React.createClass({
+	displayName: 'LeadCapture',
+
+	onSubmit: function (e) {
+		if (!this.refs.fieldEmail.state.valid) {
+			alert("You suck at filling out forms, Email is alwasy required in a lead capture form. Dummy");
+		} else {
+			//send requrest to email host or server!
+			var httpRequestBody = {
+				email: this.refs.fieldEmail.state.value,
+				firstName: this.refs.fieldName.state.value
+			};
+			console.log("we gottech here");
+		}
+		this.refs.fieldEmail.clear();
+		this.refs.fieldName.clear();
+	},
+	render: function () {
+		return React.createElement(
+			'div',
+			{ className: 'col-sm-3' },
+			React.createElement(
+				'div',
+				{ className: 'panel panel-default' },
+				React.createElement(
+					'div',
+					{ className: 'panel-body' },
+					React.createElement(NameField, { type: 'First', ref: 'fieldName' }),
+					' ',
+					React.createElement('br', null),
+					React.createElement(EmailField, { ref: 'fieldEmail' }),
+					React.createElement(
+						'button',
+						{ className: 'btn btn-primary', onClick: this.onSubmit },
+						'Submit'
+					)
+				)
+			)
+		);
+	}
 });
 
-module.exports = ListItem;
+module.exports = LeadCapture;
 
-},{"react":131}],161:[function(require,module,exports){
+},{"./EmailField.jsx":160,"./NameField.jsx":162,"react":131}],162:[function(require,module,exports){
+var React = require('react');
+
+var NameField = React.createClass({
+	displayName: "NameField",
+
+	getInitialState: function () {
+		return { value: "" };
+	},
+	onChange: function (e) {
+		this.setState({ value: e.target.value });
+	},
+	clear: function () {
+		this.setState({ value: "" });
+	},
+	render: function () {
+		return React.createElement("input", {
+			className: "form-control",
+			placeholder: this.props.type + " Name",
+			onChange: this.onChange, value: this.state.value });
+	}
+});
+
+module.exports = NameField;
+
+},{"react":131}],163:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var List = require('./components/List.jsx');
+var EmailField = require('./components/EmailField.jsx');
+var LeadCapture = require('./components/LeadCapture.jsx');
 
-ReactDOM.render(React.createElement(List, null), document.getElementById('ingredients'));
+ReactDOM.render(React.createElement(LeadCapture, null), document.getElementById('email'));
+//ReactDOM.render(<EmailField/>, document.getElementById('email'));
 
-},{"./components/List.jsx":159,"react":131,"react-dom":2}]},{},[161]);
+},{"./components/EmailField.jsx":160,"./components/LeadCapture.jsx":161,"react":131,"react-dom":2}]},{},[163]);

@@ -24,5 +24,32 @@ javascript bind
 19
 
 22. Use unique identifier: very important
-			Node Version Manger ==> nvm
-			===================
+		Node Version Manger ==> nvm
+		===================
+29. Use React without NPM:  		cdnjs.com
+30. Thinking in React: 
+		https://facebook.github.io/react/docs/thinking-in-react.html
+32. React Chome developer tools
+		google chrome store: search "react developer"
+34. Event system in React
+		google react --> docs --> Event System
+		
+35. Multiple pages with React Router
+		https://github.com/devslopes/
+		https://github.com/reactjs/react-router
+36. Caveats of Using Hash History
+		https://github.com/mjackson/history/blob/master/docs/HashHistoryCaveats.md
+40. Forms in react
+		google: NPM email validation
+		
+44. Setting up a simple Node & Express test server
+		https://github.com/devslopes/simple-express-server
+		nodemon: automatic monitor and nodejs file chages, and restart as needed
+			npm install -g nodemon
+
+45. How web request work
+		curl:
+		postman: https://www.getpostman.com/
+			star wars api: 	https://swapi.co
+							pokeapi.co
+48. HTTP Requests with Fetch
