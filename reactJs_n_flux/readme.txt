@@ -53,3 +53,13 @@ javascript bind
 			star wars api: 	https://swapi.co
 							pokeapi.co
 48. HTTP Requests with Fetch
+		github.com/github/fetch
+51. understanding Flux
+		flux: https://facebook.github.io/flux/
+52. reflux
+		reflux: https://github.com/reflux/refluxjs
+53. react & reflux - actions and Stores
+		https://github.com/devslopes/react-course
+		'http://localhost:6069'		
+55. React & Reflux - Modifying data
+
