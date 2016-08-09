@@ -62,4 +62,6 @@ javascript bind
 		https://github.com/devslopes/react-course
 		'http://localhost:6069'		
 55. React & Reflux - Modifying data
-
+		still has some errors: in ingredients-store.jsx  @ then(function(response) {
+60. React Router, route params, getting updated props
+		https://github.com/rackt/react-router

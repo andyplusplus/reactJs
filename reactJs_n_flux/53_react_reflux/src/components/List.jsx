@@ -9,7 +9,7 @@ var List = React.createClass({
 	mixins: [Reflux.listenTo(IngredientStore, 'onChange')],
 	getInitialState: function(){
 		console.log("initial here");
-		return {ingredients: []};
+		return {ingredients: [], newText: ""};
 	},
 	componentWillMount: function(){
 		Actions.getIngredients();
@@ -17,13 +17,30 @@ var List = React.createClass({
 	onChange: function(event, ingredients){
 		this.setState({ingredients: ingredients});
 	},
+	onClick: function(e){
+		if (this.state.newText) {
+			Actions.postIngredient(this.state.newText);
+		} 
+		this.setState({newText: ""});
+	},
+	onInputChange: function(e){
+		this.setState({newText: e.target.value});
+	},
     render: function() {
     	console.log("render here");
         var listItems = this.state.ingredients.map(function(item) {
             return <ListItem key={item.id} ingredient={item.text} />;
         });
 
-        return (<ul>{listItems}</ul>);
+        return (
+        	<div>
+        		<input 	placeholder="Add Item" 
+        				value={this.state.newText} 
+        				onChange={this.onInputChange} />
+        		<button onClick={this.onClick}>Add Item</button>
+        		<ul>{listItems}</ul>
+        	</div>
+        );
     }
 });
 

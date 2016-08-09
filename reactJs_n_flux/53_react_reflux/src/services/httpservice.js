@@ -9,7 +9,23 @@ var service = {
 			console.log("RES:", response);
 			return response.json();
 		});
+	},
+	post: function(url, ingredient){
+		return 
+		fetch(base + url, 
+					{
+						headers: {
+							'Accept': 'text/plain',
+							'Content-Type': 'application/json'
+						},
+						method: 'post', 
+						body: JSON.stringify(ingredient)
+					}
+		).then(function(response){
+			return respose;
+		});
 	}
 };
 
 module.exports = service;
+//
