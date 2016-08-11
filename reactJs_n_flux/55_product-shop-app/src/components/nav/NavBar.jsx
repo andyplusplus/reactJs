@@ -1,5 +1,7 @@
 var React = require('react');
 var NavItem = require('./NavItem.jsx');
+var ReactRouter = require('react-router');
+var Link = ReactRouter.Link;
 
 module.exports = React.createClass({
 	render: function(){
@@ -34,11 +36,13 @@ module.exports = React.createClass({
 							className="navbar-toggle collapsed" 
 							data-toggle="collapse"
 							data-target="#nav-collapse">
+
+							<span className="sr-only">Toggle navigation</span>
 							<span className="icon-bar"></span>
 							<span className="icon-bar"></span>
 							<span className="icon-bar"></span>
 						</button>
-						<a style={titleStyle} className="navbar-brand" href="#">Product Shop</a>
+						<Link style={titleStyle} className="navbar-brand" to="/">Product Shop</Link>
 					</div>
 					<div className="collapse navbar-collapse" id="nav-collapse">
 						<ul className="nav navbar-nav">
