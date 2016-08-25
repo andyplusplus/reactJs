@@ -20,9 +20,11 @@
   "dependencies": {
     "babel-preset-react": "^6.1.18",
     "babelify": "^7.2.0",
+    "email-validator": "^1.0.4",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-router": "^2.7.0",
+    "reflux": "^0.4.1",
     "watchify": "^3.6.1"
   }
 }
