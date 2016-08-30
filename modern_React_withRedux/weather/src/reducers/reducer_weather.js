@@ -5,7 +5,7 @@ export default function(state = [], action) {
   switch (action.type) {
     case FETCH_WEATHER:
       //return state.concat([action.payload.data]);
-      return [action.payload.data, ...state];
+      return [action.payload.data, ...state]; // never modify state directly
   } //console.log('action received', action);
   return state;
 }
